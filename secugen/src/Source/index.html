@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>result: <span id="result"></span></div>
+    <button onclick="test()">Test</button>
+    <script type="text/javascript" src="token.js" ></script>
+    <script>
+        // Ensure the Module is initialized before using it
+        Module.onRuntimeInitialized = () => {
+            document.querySelector('button').disabled = false;
+        };
+        
+        function test() {
+            var result = document.getElementById("result");
+            // const wasmResult = Module.ccall("add_numbers", "number", ["number", "number"], [3, 5]);
+            const wasmResult = Module._add_numbers(3, 5);
+            result.innerHTML = "wasmResult: " + wasmResult + " jsResult: " + (3 + 5);
+        }
+    </script>
+    </body
+</html>
