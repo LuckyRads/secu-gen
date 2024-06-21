@@ -10,16 +10,16 @@
     <button onclick="test()">Test</button>
     <script type="text/javascript" src="token.js" ></script>
     <script>
-        // Ensure the Module is initialized before using it
-        Module.onRuntimeInitialized = () => {
-            document.querySelector('button').disabled = false;
-        };
-        
         function test() {
             var result = document.getElementById("result");
             // const wasmResult = Module.ccall("add_numbers", "number", ["number", "number"], [3, 5]);
-            const wasmResult = Module._add_numbers(3, 5);
-            result.innerHTML = "wasmResult: " + wasmResult + " jsResult: " + (3 + 5);
+            const tokenPtr = Module.ccall('generate_token', 'number', [], []);
+            // const tokenPtr = Module._generate_token();
+            const token = Module.UTF8ToString(tokenPtr);
+            console.log(token);
+            // Module.ccall('_free_ptr', 'void', ['number'], [tokenPtr])
+            Module._free_ptr(tokenPtr);
+            result.innerHTML = "wasmResult: " + token;
         }
     </script>
     </body
